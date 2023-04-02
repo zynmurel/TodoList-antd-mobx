@@ -2,7 +2,6 @@ import { Table, Button } from "antd";
 import { useContext } from "react";
 import { MyContext } from "../context/MyContext";
 import { MdDeleteForever } from "react-icons/md";
-import { toJS } from "mobx";
 import { observer } from "mobx-react";
 import EmptyBox from "../emptyIcons/NoTodo";
 import tableColumns from "../tablecol/ToDoColumn";
@@ -18,11 +17,6 @@ const DoneList = () => {
     type: "checkbox",
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedDoneRows(selectedRowKeys);
-      // console.log(
-      //   `selectedRowKeys: ${selectedRowKeys}`,
-      //   "selectedRows: ",
-      //   selectedRows
-      // );
     },
   };
 
@@ -30,7 +24,6 @@ const DoneList = () => {
     type: "done",
     width: 100,
     title: "Actions",
-    //props: { setOpen, setTodoId, setTodoData },
   });
 
   return (

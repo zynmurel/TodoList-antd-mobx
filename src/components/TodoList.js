@@ -28,13 +28,9 @@ const TodoList = ({ onFinish, form }) => {
     type: "checkbox",
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedRows(selectedRowKeys);
-      // console.log(
-      //   `selectedRowKeys: ${selectedRowKeys}`,
-      //   "selectedRows: ",
-      //   selectedRows
-      // );
     },
   };
+
   const columns = tableColumns("To Do", "Date to Finish", {
     type: "todo",
     title: "Actions",

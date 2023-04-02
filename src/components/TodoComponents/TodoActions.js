@@ -6,6 +6,7 @@ import { ConfigProvider } from "antd";
 const TodoActions = ({ id, setOpen, setTodoId, setTodoData }) => {
   const { todos, selectedRows, setSelectedRows, deleteTodo, setToDone } =
     useContext(MyContext);
+
   return (
     <div className=" flex gap-2">
       <Button
