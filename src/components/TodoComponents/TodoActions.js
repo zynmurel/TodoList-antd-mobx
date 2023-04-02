@@ -4,17 +4,17 @@ import { MdDoneOutline, MdDeleteForever, MdEditOff } from "react-icons/md";
 import { MyContext } from "../../context/MyContext";
 import { ConfigProvider } from "antd";
 const TodoActions = ({ id, setOpen, setTodoId, setTodoData }) => {
-  const { todos, selectedRows, addSelectedRows, deleteTodo, setToDone } =
+  const { todos, selectedRows, setSelectedRows, deleteTodo, setToDone } =
     useContext(MyContext);
   return (
     <div className=" flex gap-2">
       <Button
         type="primary"
-        icon={<MdDoneOutline />}
+        icon={<MdDoneOutline className=" text-xl" />}
         onClick={() => {
           const objIndex = todos.findIndex((obj) => obj.key == id);
           setToDone(objIndex);
-          addSelectedRows(selectedRows.filter((sr) => sr !== id));
+          setSelectedRows(selectedRows.filter((sr) => sr !== id));
         }}
       />
       <ConfigProvider
@@ -33,16 +33,16 @@ const TodoActions = ({ id, setOpen, setTodoId, setTodoData }) => {
             setTodoId(objIndex);
             setTodoData(todos[objIndex]);
           }}
-          icon={<MdEditOff />}
+          icon={<MdEditOff className=" text-xl" />}
         />
       </ConfigProvider>
       <Button
         type="primary"
         danger
-        icon={<MdDeleteForever />}
+        icon={<MdDeleteForever className=" text-xl" />}
         onClick={() => {
           deleteTodo(id);
-          addSelectedRows(selectedRows.filter((sr) => sr !== id));
+          setSelectedRows(selectedRows.filter((sr) => sr !== id));
         }}
       />
     </div>

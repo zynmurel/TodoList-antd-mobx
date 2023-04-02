@@ -10,8 +10,8 @@ class TodoListClass {
   constructor() {
     makeAutoObservable(this, {
       addTodo: action.bound,
-      addSelectedRows: action.bound,
-      addSeletedDoneRows: action.bound,
+      setSelectedRows: action.bound,
+      setSelectedDoneRows: action.bound,
       deleteTodo: action.bound,
       setToDone: action.bound,
       editTodo: action.bound,
@@ -27,10 +27,10 @@ class TodoListClass {
       done: false,
     });
   };
-  addSelectedRows = (rows) => {
+  setSelectedRows = (rows) => {
     this.selectedRows = rows;
   };
-  addSeletedDoneRows = (rows) => {
+  setSelectedDoneRows = (rows) => {
     this.selectedDoneRows = rows;
   };
   deleteTodo = (id) => {
@@ -38,6 +38,9 @@ class TodoListClass {
   };
   setToDone = (id) => {
     this.todos[id].done = true;
+  };
+  setToUndone = (id) => {
+    this.todos[id].done = false;
   };
   editTodo = (id, data) => {
     this.todos[id].todo = data.todo;
@@ -55,7 +58,6 @@ class TodoListClass {
       ids.includes(td.key) ? (td.done = true) : (td.done = td.done);
       return td;
     });
-    console.log(toJS(this.todos));
     this.selectedRows = this.selectedRows.filter((td) => !ids.includes(td));
   };
 }

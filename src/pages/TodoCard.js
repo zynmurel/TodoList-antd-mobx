@@ -8,15 +8,15 @@ import DoneList from "../components/DoneList";
 const TodoCard = () => {
   const { addTodo } = useContext(MyContext);
   const [form] = Form.useForm();
-  const [activeTabKey, setActiveTabKey] = useState("tab1");
+  const [activeTabKey, setActiveTabKey] = useState("todos");
 
   const tabList = [
     {
-      key: "tab1",
+      key: "todos",
       tab: "Todo/s",
     },
     {
-      key: "tab2",
+      key: "done",
       tab: "Done",
     },
   ];
@@ -24,9 +24,16 @@ const TodoCard = () => {
   const cardStyle = {
     headStyle: {
       fontSize: 30,
+      backgroundColor: "white",
       width: "100%",
+      display: "flex",
+      alignItems: "center",
     },
     bodyStyle: { height: 600, width: "100%" },
+  };
+
+  const onTabChange = (key) => {
+    setActiveTabKey(key);
   };
 
   const onFinish = (values) => {
@@ -42,32 +49,31 @@ const TodoCard = () => {
     form.resetFields();
   };
 
-  const onTab1Change = (key) => {
-    setActiveTabKey(key);
+  const ListToShow = () => {
+    switch (activeTabKey) {
+      case "todos":
+        return (
+          <>
+            <TodoList onFinish={onFinish} form={form} />
+          </>
+        );
+      case "done":
+        return <DoneList />;
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Card
-        title="TODO List/s"
+        title="To Do List/s"
         tabList={tabList}
         activeTabKey={activeTabKey}
-        onTabChange={onTab1Change}
+        onTabChange={onTabChange}
         headStyle={cardStyle.headStyle}
-        className="flex items-center justify-center flex-col shadow-lg w-1/2 bg-slate-100"
+        className="flex items-center justify-center flex-col shadow-lg w-11/12 lg:w-1/2 sm:w-3/5 bg-slate-100"
         bodyStyle={cardStyle.bodyStyle}
       >
-        {activeTabKey === "tab1" && (
-          <>
-            <TodoForm onFinish={onFinish} form={form} />
-            <TodoList />
-          </>
-        )}
-        {activeTabKey === "tab2" && (
-          <>
-            <DoneList />
-          </>
-        )}
+        <ListToShow />
       </Card>
     </div>
   );

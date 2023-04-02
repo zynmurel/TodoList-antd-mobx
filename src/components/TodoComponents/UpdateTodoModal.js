@@ -3,11 +3,26 @@ import { useContext, useEffect } from "react";
 import { MyContext } from "../../context/MyContext";
 
 const UpdateTodoModal = ({ open, todoData, setOpen, setTodoId, todoId }) => {
-  const { editTodo, todos } = useContext(MyContext);
+  const { editTodo } = useContext(MyContext);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (open) {
+      setTodo();
+    }
+  }, [open]);
+
+  const setTodo = () => {
+    form.setFieldsValue({
+      todo: todoData.todo,
+      date: todoData.date ? todoData.date.dateData : null,
+    });
+  };
+
   const handleCancel = () => {
     setOpen(false);
   };
+
   const handleOk = (values) => {
     const updatedTodo = {
       todo: values.todo,
@@ -23,17 +38,7 @@ const UpdateTodoModal = ({ open, todoData, setOpen, setTodoId, todoId }) => {
     setTodoId(null);
     form.resetFields();
   };
-  const setTodo = () => {
-    form.setFieldsValue({
-      todo: todoData.todo,
-      date: todoData.date ? todoData.date.dateData : null,
-    });
-  };
-  useEffect(() => {
-    if (open) {
-      setTodo();
-    }
-  }, [open]);
+
   return (
     <Modal
       forceRender

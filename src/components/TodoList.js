@@ -4,75 +4,47 @@ import { useContext, useState } from "react";
 import { MyContext } from "../context/MyContext";
 import { MdDoneOutline, MdDeleteForever } from "react-icons/md";
 import UpdateTodoModal from "./TodoComponents/UpdateTodoModal";
-import TodoActions from "./TodoComponents/TodoActions";
 import EmptyBox from "../emptyIcons/NoTodo";
+import TodoForm from "./TodoComponents/TodoForm";
+import tableColumns from "../tablecol/ToDoColumn";
 
-const TodoList = () => {
+const TodoList = ({ onFinish, form }) => {
   const [open, setOpen] = useState(false);
   const [todoId, setTodoId] = useState(null);
   const [todoData, setTodoData] = useState({});
+
   const {
     todos,
     selectedRows,
-    addSelectedRows,
+    setSelectedRows,
     deleteSelectedTodo,
     setSelectedToDone,
   } = useContext(MyContext);
+
+  const filteredTodo = todos.filter((td) => !td.done).reverse();
+
   const rowSelection = {
     selectedRowKeys: selectedRows,
     type: "checkbox",
     onChange: (selectedRowKeys, selectedRows) => {
-      addSelectedRows(selectedRowKeys);
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
+      setSelectedRows(selectedRowKeys);
+      // console.log(
+      //   `selectedRowKeys: ${selectedRowKeys}`,
+      //   "selectedRows: ",
+      //   selectedRows
+      // );
     },
   };
-  const columns = [
-    {
-      title: "Todo/s",
-      dataIndex: "todo",
-      render: (todo) => (
-        <>
-          <p className=" text-black text-xs lg:text-base font-medium m-0">
-            {todo}
-          </p>
-        </>
-      ),
-    },
-    {
-      title: "Date to Finish",
-      dataIndex: "date",
-      render: (date) => (
-        <>
-          {date ? (
-            <p className=" text-black text-xs m-0">{date.dateString}</p>
-          ) : (
-            <p className=" text-gray-500 text-xs m-0">No Date</p>
-          )}
-        </>
-      ),
-      width: "30%",
-    },
-    {
-      title: "Action",
-      dataIndex: "key",
-      render: (id) => (
-        <TodoActions
-          id={id}
-          setOpen={setOpen}
-          setTodoId={setTodoId}
-          setTodoData={setTodoData}
-        />
-      ),
-      width: 150,
-    },
-  ];
-  const filteredTodo = todos.filter((td) => !td.done);
+  const columns = tableColumns("To Do", "Date to Finish", {
+    type: "todo",
+    title: "Actions",
+    width: 140,
+    props: { setOpen, setTodoId, setTodoData },
+  });
+
   return (
     <>
+      <TodoForm onFinish={onFinish} form={form} />
       <UpdateTodoModal
         open={open}
         todoData={todoData}
@@ -88,6 +60,7 @@ const TodoList = () => {
         dataSource={[...filteredTodo]}
         scroll={{
           y: 320,
+          x: 400,
         }}
       />
       <div className="flex flex-row justify-end gap-2 mt-3">
