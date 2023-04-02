@@ -1,5 +1,5 @@
-import { Children, createContext } from "react";
-import { action, makeAutoObservable, observe, toJS } from "mobx";
+import { createContext } from "react";
+import { action, makeAutoObservable } from "mobx";
 
 export const TodoContext = createContext(0);
 class TodoListClass {
@@ -54,7 +54,7 @@ class TodoListClass {
   };
   setSelectedToDone = (ids) => {
     this.todos.map((td) => {
-      ids.includes(td.key) ? (td.done = true) : (td.done = td.done);
+      ids.includes(td.key) ? (td.done = true) : (td.done = false);
       return td;
     });
     this.selectedRows = this.selectedRows.filter((td) => !ids.includes(td));
@@ -63,12 +63,10 @@ class TodoListClass {
 
 const todoListClass = new TodoListClass();
 
-const TodoContextProvider = ({ children }) => {
+export const TodoProvider = ({ children }) => {
   return (
     <TodoContext.Provider value={todoListClass}>
       {children}
     </TodoContext.Provider>
   );
 };
-
-export default TodoContextProvider;
