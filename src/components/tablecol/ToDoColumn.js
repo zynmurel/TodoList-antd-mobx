@@ -1,5 +1,5 @@
-import DoneActions from "../components/DoneComponents/DoneActions";
-import TodoActions from "../components/TodoComponents/TodoActions";
+import DoneActions from "../DoneComponents/DoneActions";
+import TodoActions from "../TodoComponents/TodoActions";
 
 const tableColumns = (col1Title, col2Title, col3) => {
   const thirdCol = () => {

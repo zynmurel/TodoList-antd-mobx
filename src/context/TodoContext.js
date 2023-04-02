@@ -1,6 +1,8 @@
-import { createContext } from "react";
+import { Children, createContext } from "react";
 import { action, makeAutoObservable, observe, toJS } from "mobx";
-export class TodoListClass {
+
+export const TodoContext = createContext(0);
+class TodoListClass {
   todos = [];
   selectedRows = [];
   selectedDoneRows = [];
@@ -59,4 +61,14 @@ export class TodoListClass {
   };
 }
 
-export const TodoContext = createContext(0);
+const todoListClass = new TodoListClass();
+
+const TodoContextProvider = ({ children }) => {
+  return (
+    <TodoContext.Provider value={todoListClass}>
+      {children}
+    </TodoContext.Provider>
+  );
+};
+
+export default TodoContextProvider;

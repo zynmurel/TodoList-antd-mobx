@@ -4,9 +4,9 @@ import { useContext, useState } from "react";
 import { TodoContext } from "../context/TodoContext";
 import { MdDoneOutline, MdDeleteForever } from "react-icons/md";
 import UpdateTodoModal from "./TodoComponents/UpdateTodoModal";
-import EmptyBox from "../emptyIcons/NoTodo";
+import EmptyBox from "./emptyIcons/NoTodo";
 import TodoForm from "./TodoComponents/TodoForm";
-import tableColumns from "../tablecol/ToDoColumn";
+import tableColumns from "./tablecol/ToDoColumn";
 
 const TodoList = ({ onFinish, form }) => {
   const [open, setOpen] = useState(false);

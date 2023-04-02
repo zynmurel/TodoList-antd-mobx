@@ -3,8 +3,8 @@ import { useContext } from "react";
 import { TodoContext } from "../context/TodoContext";
 import { MdDeleteForever } from "react-icons/md";
 import { observer } from "mobx-react";
-import EmptyBox from "../emptyIcons/NoTodo";
-import tableColumns from "../tablecol/ToDoColumn";
+import EmptyBox from "./emptyIcons/NoTodo";
+import tableColumns from "./tablecol/ToDoColumn";
 
 const DoneList = () => {
   const { todos, selectedDoneRows, setSelectedDoneRows, deleteSelectedTodo } =

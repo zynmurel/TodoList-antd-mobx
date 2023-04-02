@@ -1,13 +1,12 @@
 import "./App.css";
-import { TodoContext, TodoListClass } from "./context/TodoContext";
+import TodoContextProvider from "./context/TodoContext";
 import TodoCard from "./pages/TodoCard";
 
 function App() {
-  const todoListClass = new TodoListClass();
   return (
-    <TodoContext.Provider value={todoListClass}>
+    <TodoContextProvider>
       <TodoCard />
-    </TodoContext.Provider>
+    </TodoContextProvider>
   );
 }
 
