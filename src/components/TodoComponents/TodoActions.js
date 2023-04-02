@@ -2,7 +2,7 @@ import { Button } from "antd";
 import { useContext } from "react";
 import { MdDoneOutline, MdDeleteForever, MdEditOff } from "react-icons/md";
 import { MyContext } from "../../context/MyContext";
-import { ConfigProvider } from "antd";
+import PrimaryChanger from "../../theme/primaryChanger";
 const TodoActions = ({ id, setOpen, setTodoId, setTodoData }) => {
   const { todos, selectedRows, setSelectedRows, deleteTodo, setToDone } =
     useContext(MyContext);
@@ -18,13 +18,7 @@ const TodoActions = ({ id, setOpen, setTodoId, setTodoData }) => {
           setSelectedRows(selectedRows.filter((sr) => sr !== id));
         }}
       />
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: "#ffa940",
-          },
-        }}
-      >
+      <PrimaryChanger color={"#ffa940"}>
         <Button
           type="primary"
           onClick={() => {
@@ -36,7 +30,7 @@ const TodoActions = ({ id, setOpen, setTodoId, setTodoData }) => {
           }}
           icon={<MdEditOff className=" text-xl" />}
         />
-      </ConfigProvider>
+      </PrimaryChanger>
       <Button
         type="primary"
         danger

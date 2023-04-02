@@ -51,11 +51,7 @@ const TodoCard = () => {
   const ListToShow = () => {
     switch (activeTabKey) {
       case "todos":
-        return (
-          <>
-            <TodoList onFinish={onFinish} form={form} />
-          </>
-        );
+        return <TodoList onFinish={onFinish} form={form} />;
       case "done":
         return <DoneList />;
     }

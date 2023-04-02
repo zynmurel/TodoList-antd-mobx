@@ -6,6 +6,7 @@ import {
 } from "react-icons/md";
 import { MyContext } from "../../context/MyContext";
 import { ConfigProvider } from "antd";
+import PrimaryChanger from "../../theme/primaryChanger";
 const DoneActions = ({ id }) => {
   const {
     todos,
@@ -17,13 +18,7 @@ const DoneActions = ({ id }) => {
 
   return (
     <div className=" flex gap-2">
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: "#b37feb",
-          },
-        }}
-      >
+      <PrimaryChanger color={"#b37feb"}>
         <Button
           type="primary"
           onClick={() => {
@@ -33,7 +28,7 @@ const DoneActions = ({ id }) => {
           }}
           icon={<MdOutlineSettingsBackupRestore className=" text-xl" />}
         />
-      </ConfigProvider>
+      </PrimaryChanger>
       <Button
         type="primary"
         danger
