@@ -1,11 +1,11 @@
 import { observer } from "mobx-react";
 import { Card, Form } from "antd";
 import { useContext, useState } from "react";
-import { MyContext } from "../context/MyContext";
+import { TodoContext } from "../context/TodoContext";
 import TodoList from "../components/TodoList";
 import DoneList from "../components/DoneList";
 const TodoCard = () => {
-  const { addTodo } = useContext(MyContext);
+  const { addTodo } = useContext(TodoContext);
   const [form] = Form.useForm();
   const [activeTabKey, setActiveTabKey] = useState("todos");
 

@@ -59,4 +59,4 @@ export class TodoListClass {
   };
 }
 
-export const MyContext = createContext(0);
+export const TodoContext = createContext(0);

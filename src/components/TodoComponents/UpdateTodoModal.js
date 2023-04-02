@@ -1,9 +1,9 @@
 import { Modal, Input, DatePicker, Form, Button } from "antd";
 import { useContext, useEffect } from "react";
-import { MyContext } from "../../context/MyContext";
+import { TodoContext } from "../../context/TodoContext";
 
 const UpdateTodoModal = ({ open, todoData, setOpen, setTodoId, todoId }) => {
-  const { editTodo } = useContext(MyContext);
+  const { editTodo } = useContext(TodoContext);
   const [form] = Form.useForm();
 
   useEffect(() => {

@@ -1,11 +1,11 @@
 import { Button } from "antd";
 import { useContext } from "react";
 import { MdDoneOutline, MdDeleteForever, MdEditOff } from "react-icons/md";
-import { MyContext } from "../../context/MyContext";
+import { TodoContext } from "../../context/TodoContext";
 import PrimaryChanger from "../../theme/primaryChanger";
 const TodoActions = ({ id, setOpen, setTodoId, setTodoData }) => {
   const { todos, selectedRows, setSelectedRows, deleteTodo, setToDone } =
-    useContext(MyContext);
+    useContext(TodoContext);
 
   return (
     <div className=" flex gap-2">

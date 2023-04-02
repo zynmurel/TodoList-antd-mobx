@@ -1,7 +1,7 @@
 import { Table, Button } from "antd";
 import { observer } from "mobx-react";
 import { useContext, useState } from "react";
-import { MyContext } from "../context/MyContext";
+import { TodoContext } from "../context/TodoContext";
 import { MdDoneOutline, MdDeleteForever } from "react-icons/md";
 import UpdateTodoModal from "./TodoComponents/UpdateTodoModal";
 import EmptyBox from "../emptyIcons/NoTodo";
@@ -19,7 +19,7 @@ const TodoList = ({ onFinish, form }) => {
     setSelectedRows,
     deleteSelectedTodo,
     setSelectedToDone,
-  } = useContext(MyContext);
+  } = useContext(TodoContext);
 
   const filteredTodo = todos.filter((td) => !td.done).reverse();
 

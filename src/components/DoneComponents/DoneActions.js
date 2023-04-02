@@ -4,8 +4,7 @@ import {
   MdDeleteForever,
   MdOutlineSettingsBackupRestore,
 } from "react-icons/md";
-import { MyContext } from "../../context/MyContext";
-import { ConfigProvider } from "antd";
+import { TodoContext } from "../../context/TodoContext";
 import PrimaryChanger from "../../theme/primaryChanger";
 const DoneActions = ({ id }) => {
   const {
@@ -14,7 +13,7 @@ const DoneActions = ({ id }) => {
     deleteTodo,
     setToUndone,
     setSelectedDoneRows,
-  } = useContext(MyContext);
+  } = useContext(TodoContext);
 
   return (
     <div className=" flex gap-2">
