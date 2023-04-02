@@ -58,14 +58,14 @@ const TodoCard = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex sm:items-center justify-center">
       <Card
         title="To Do List/s"
         tabList={tabList}
         activeTabKey={activeTabKey}
         onTabChange={onTabChange}
         headStyle={cardStyle.headStyle}
-        className="flex items-center justify-center flex-col shadow-lg w-11/12 lg:w-1/2 sm:w-3/5 bg-slate-100"
+        className="flex  flex-col shadow-lg w-full lg:w-1/2 sm:w-3/5 bg-slate-100"
         bodyStyle={cardStyle.bodyStyle}
       >
         <ListToShow />
