@@ -1,42 +1,26 @@
 import { Button } from "antd";
 import { useContext } from "react";
-import {
-  MdDeleteForever,
-  MdOutlineSettingsBackupRestore,
-} from "react-icons/md";
+import { MdOutlineSettingsBackupRestore } from "react-icons/md";
 import { TodoContext } from "../../context/TodoContext";
 import PrimaryChanger from "../../theme/primaryChanger";
 const DoneActions = ({ id }) => {
-  const {
-    todos,
-    selectedDoneRows,
-    deleteTodo,
-    setToUndone,
-    setSelectedDoneRows,
-  } = useContext(TodoContext);
+  const { todos, selectedDoneRows, setToUndone, setSelectedDoneRows } =
+    useContext(TodoContext);
+  const undoTodo = () => {
+    const objIndex = todos.findIndex((obj) => obj.key === id);
+    setToUndone(objIndex);
+    setSelectedDoneRows(selectedDoneRows.filter((sr) => sr !== id));
+  };
 
   return (
-    <div className=" flex gap-2">
+    <div className=" flex gap-2 justify-center items-center">
       <PrimaryChanger color={"#b37feb"}>
         <Button
           type="primary"
-          onClick={() => {
-            const objIndex = todos.findIndex((obj) => obj.key == id);
-            setToUndone(objIndex);
-            setSelectedDoneRows(selectedDoneRows.filter((sr) => sr !== id));
-          }}
+          onClick={undoTodo}
           icon={<MdOutlineSettingsBackupRestore className=" text-xl" />}
         />
       </PrimaryChanger>
-      <Button
-        type="primary"
-        danger
-        icon={<MdDeleteForever className=" text-xl" />}
-        onClick={() => {
-          deleteTodo(id);
-          setSelectedDoneRows(selectedDoneRows.filter((sr) => sr !== id));
-        }}
-      />
     </div>
   );
 };

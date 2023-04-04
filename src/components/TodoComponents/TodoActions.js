@@ -1,45 +1,26 @@
 import { Button } from "antd";
 import { useContext } from "react";
-import { MdDoneOutline, MdDeleteForever, MdEditOff } from "react-icons/md";
+import { MdEditOff } from "react-icons/md";
 import { TodoContext } from "../../context/TodoContext";
 import PrimaryChanger from "../../theme/primaryChanger";
 const TodoActions = ({ id, setOpen, setTodoId, setTodoData }) => {
-  const { todos, selectedRows, setSelectedRows, deleteTodo, setToDone } =
-    useContext(TodoContext);
+  const { todos } = useContext(TodoContext);
+  const editTodo = () => {
+    const objIndex = todos.findIndex((obj) => obj.key === id);
+    setOpen(true);
+    setTodoId(objIndex);
+    setTodoData(todos[objIndex]);
+  };
 
   return (
-    <div className=" flex gap-2">
-      <Button
-        type="primary"
-        icon={<MdDoneOutline className=" text-xl" />}
-        onClick={() => {
-          const objIndex = todos.findIndex((obj) => obj.key == id);
-          setToDone(objIndex);
-          setSelectedRows(selectedRows.filter((sr) => sr !== id));
-        }}
-      />
+    <div className=" flex gap-2 justify-center items-center">
       <PrimaryChanger color={"#ffa940"}>
         <Button
           type="primary"
-          onClick={() => {
-            const objIndex = todos.findIndex((obj) => obj.key == id);
-            setOpen(true);
-            //editTodo(objIndex, "Maui");
-            setTodoId(objIndex);
-            setTodoData(todos[objIndex]);
-          }}
+          onClick={editTodo}
           icon={<MdEditOff className=" text-xl" />}
         />
       </PrimaryChanger>
-      <Button
-        type="primary"
-        danger
-        icon={<MdDeleteForever className=" text-xl" />}
-        onClick={() => {
-          deleteTodo(id);
-          setSelectedRows(selectedRows.filter((sr) => sr !== id));
-        }}
-      />
     </div>
   );
 };

@@ -2,7 +2,14 @@ import { Modal, Input, DatePicker, Form, Button } from "antd";
 import { useContext, useEffect } from "react";
 import { TodoContext } from "../../context/TodoContext";
 
-const UpdateTodoModal = ({ open, todoData, setOpen, setTodoId, todoId }) => {
+const UpdateTodoModal = ({
+  open,
+  todoData,
+  setOpen,
+  setTodoId,
+  todoId,
+  todoNotification,
+}) => {
   const { editTodo } = useContext(TodoContext);
   const [form] = Form.useForm();
 
@@ -36,6 +43,7 @@ const UpdateTodoModal = ({ open, todoData, setOpen, setTodoId, todoId }) => {
     editTodo(todoId, updatedTodo);
     setOpen(false);
     setTodoId(null);
+    todoNotification("success", `To Do Updated!`);
     form.resetFields();
   };
 
@@ -49,16 +57,12 @@ const UpdateTodoModal = ({ open, todoData, setOpen, setTodoId, todoId }) => {
       onCancel={handleCancel}
     >
       <div className=" flex items-center justify-center flex-col gap-2">
-        <p className=" font-bold text-lg m-0">{todoData.todo}</p>
-        <p className=" text-gray-600 m-0 -mt-3">
-          {todoData.date ? todoData.date.dateString : "No Date"}
-        </p>
         <Form
           name="todoForm"
           autoComplete="off"
           form={form}
           onFinish={handleOk}
-          className="flex flex-col items-center"
+          className="flex flex-col items-center gap-4"
         >
           <Form.Item name={"todo"} rules={[{ required: true }]}>
             <Input

@@ -1,10 +1,18 @@
 import { observer } from "mobx-react";
-import { Card, Form } from "antd";
+import { Card, Form, notification } from "antd";
 import { useContext, useState } from "react";
 import { TodoContext } from "../context/TodoContext";
 import TodoList from "../components/TodoList";
 import DoneList from "../components/DoneList";
 const TodoCard = () => {
+  const [todoApi, contextHolder] = notification.useNotification();
+  const todoNotification = (type, description) => {
+    todoApi[type]({
+      description: description,
+      duration: 2,
+    });
+  };
+
   const { addTodo } = useContext(TodoContext);
   const [form] = Form.useForm();
   const [activeTabKey, setActiveTabKey] = useState("todos");
@@ -22,11 +30,14 @@ const TodoCard = () => {
 
   const cardStyle = {
     headStyle: {
-      fontSize: 30,
+      fontSize: 40,
       backgroundColor: "white",
-      width: "100%",
       display: "flex",
+      fontWeight: "bolder",
+      justifyContent: "center",
       alignItems: "center",
+      textAlign: "center",
+      color: "#002E1B",
     },
     bodyStyle: { height: 600, width: "100%" },
   };
@@ -51,21 +62,31 @@ const TodoCard = () => {
   const ListToShow = () => {
     switch (activeTabKey) {
       case "todos":
-        return <TodoList onFinish={onFinish} form={form} />;
+        return (
+          <TodoList
+            onFinish={onFinish}
+            form={form}
+            todoNotification={todoNotification}
+          />
+        );
       case "done":
-        return <DoneList />;
+        return <DoneList todoNotification={todoNotification} />;
+
+      default:
+        return "";
     }
   };
 
   return (
     <div className="min-h-screen flex sm:items-center justify-center">
+      {contextHolder}
       <Card
-        title="To Do List/s"
+        title="TO DO LIST"
         tabList={tabList}
         activeTabKey={activeTabKey}
         onTabChange={onTabChange}
         headStyle={cardStyle.headStyle}
-        className="flex  flex-col shadow-lg w-full lg:w-1/2 sm:w-3/5 bg-slate-100"
+        className="flex  flex-col shadow-lg lg:w-1/2 sm:w-3/5 bg-slate-100"
         bodyStyle={cardStyle.bodyStyle}
       >
         <ListToShow />

@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { action, makeAutoObservable } from "mobx";
+import moment from "moment";
 
 export const TodoContext = createContext(0);
 class TodoListClass {
@@ -24,6 +25,7 @@ class TodoListClass {
       ...some,
       key: key,
       done: false,
+      finished: null,
     });
   };
   setSelectedRows = (rows) => {
@@ -37,6 +39,9 @@ class TodoListClass {
   };
   setToDone = (id) => {
     this.todos[id].done = true;
+    this.todos[id].finished = {
+      dateString: moment().format("LLL"),
+    };
   };
   setToUndone = (id) => {
     this.todos[id].done = false;
@@ -54,10 +59,23 @@ class TodoListClass {
   };
   setSelectedToDone = (ids) => {
     this.todos.map((td) => {
-      ids.includes(td.key) ? (td.done = true) : (td.done = false);
+      ids.includes(td.key) &&
+        (td.done = true) &&
+        (td.finished = {
+          dateString: moment().format("LLL"),
+        });
       return td;
     });
     this.selectedRows = this.selectedRows.filter((td) => !ids.includes(td));
+  };
+  setSelectedToUndone = (ids) => {
+    this.todos.map((td) => {
+      ids.includes(td.key) && (td.done = false);
+      return td;
+    });
+    this.selectedDoneRows = this.selectedDoneRows.filter(
+      (td) => !ids.includes(td)
+    );
   };
 }
 

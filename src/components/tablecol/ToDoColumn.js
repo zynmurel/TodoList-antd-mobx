@@ -1,7 +1,7 @@
 import DoneActions from "../DoneComponents/DoneActions";
 import TodoActions from "../TodoComponents/TodoActions";
 
-const tableColumns = (col1Title, col2Title, col3) => {
+const tableColumns = (col1, col2, col3) => {
   const thirdCol = () => {
     switch (col3.type) {
       case "todo":
@@ -16,21 +16,23 @@ const tableColumns = (col1Title, col2Title, col3) => {
               setTodoData={col3.props.setTodoData}
             />
           ),
-          width: col3.width,
+          width: 100,
         };
       case "done":
         return {
           title: col3.title,
           dataIndex: "key",
           render: (id) => <DoneActions id={id} />,
-          width: col3.width,
+          width: 100,
         };
+      default:
+        return "";
     }
   };
   const cols = [
     {
-      title: col1Title,
-      dataIndex: "todo",
+      title: col1.title,
+      dataIndex: col1.index,
       render: (text) => (
         <p className=" text-black text-xs lg:text-base font-medium m-0">
           {text}
@@ -38,8 +40,8 @@ const tableColumns = (col1Title, col2Title, col3) => {
       ),
     },
     {
-      title: col2Title,
-      dataIndex: "date",
+      title: col2.title,
+      dataIndex: col2.index,
       render: (date) => (
         <>
           {date ? (

@@ -8,7 +8,7 @@ import EmptyBox from "./emptyIcons/NoTodo";
 import TodoForm from "./TodoComponents/TodoForm";
 import tableColumns from "./tablecol/ToDoColumn";
 
-const TodoList = ({ onFinish, form }) => {
+const TodoList = ({ onFinish, form, todoNotification }) => {
   const [open, setOpen] = useState(false);
   const [todoId, setTodoId] = useState(null);
   const [todoData, setTodoData] = useState({});
@@ -23,20 +23,41 @@ const TodoList = ({ onFinish, form }) => {
 
   const filteredTodo = todos.filter((td) => !td.done).reverse();
 
-  const rowSelection = {
-    selectedRowKeys: selectedRows,
-    type: "checkbox",
-    onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedRows(selectedRowKeys);
+  const tableProps = {
+    rowSelection: {
+      selectedRowKeys: selectedRows,
+      type: "checkbox",
+      onChange: (selectedRowKeys, selectedRows) => {
+        setSelectedRows(selectedRowKeys);
+      },
     },
+    scroll: {
+      y: 320,
+      x: 400,
+    },
+    locale: { emptyText: <EmptyBox text="No To Do" /> },
   };
 
-  const columns = tableColumns("To Do", "Date to Finish", {
-    type: "todo",
-    title: "Actions",
-    width: 140,
-    props: { setOpen, setTodoId, setTodoData },
-  });
+  const columns = tableColumns(
+    { title: "To Do", index: "todo" },
+    { title: "Date to Finish", index: "date" },
+    {
+      type: "todo",
+      title: "Actions",
+      props: { setOpen, setTodoId, setTodoData },
+      todoNotification: todoNotification,
+    }
+  );
+
+  const doneAllButton = () => {
+    setSelectedToDone(selectedRows);
+    todoNotification("success", `${selectedRows.length} Todo/s Done!`);
+  };
+
+  const deleteAllButton = () => {
+    deleteSelectedTodo(selectedRows);
+    todoNotification("info", `${selectedRows.length} Todo/s Deleted!`);
+  };
 
   return (
     <>
@@ -47,17 +68,15 @@ const TodoList = ({ onFinish, form }) => {
         setOpen={setOpen}
         setTodoId={setTodoId}
         todoId={todoId}
+        todoNotification={todoNotification}
       />
       <Table
         pagination={false}
-        rowSelection={rowSelection}
+        rowSelection={tableProps.rowSelection}
         columns={columns}
-        locale={{ emptyText: <EmptyBox text="No To Do" /> }}
+        locale={tableProps.locale}
         dataSource={[...filteredTodo]}
-        scroll={{
-          y: 320,
-          x: 400,
-        }}
+        scroll={tableProps.scroll}
       />
       <div className="flex flex-row justify-end gap-2 mt-3">
         <Button
@@ -65,7 +84,7 @@ const TodoList = ({ onFinish, form }) => {
           type="primary"
           icon={<MdDoneOutline />}
           disabled={selectedRows.length === 0}
-          onClick={() => setSelectedToDone(selectedRows)}
+          onClick={doneAllButton}
         >
           Done!
         </Button>
@@ -75,7 +94,7 @@ const TodoList = ({ onFinish, form }) => {
           danger
           disabled={selectedRows.length === 0}
           icon={<MdDeleteForever />}
-          onClick={() => deleteSelectedTodo(selectedRows)}
+          onClick={deleteAllButton}
         >
           Delete
         </Button>
